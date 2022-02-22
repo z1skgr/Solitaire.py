@@ -25,7 +25,7 @@ The implementation is based on 3 main axes:
 
 ## Prerequisites 
 1. Install python[^1] environment. The instalation is easy either on Windows or Linux
-2. Install pygame modules
+2. Install pygame[^2] modules
 3. Install Python IDE
     * This implementation is made in pyCharm
 
@@ -36,16 +36,51 @@ The implementation is based on 3 main axes:
 
 ### Install Python (Linux)
 1. Update repositories lists and supporting softwares
-`$ sudo apt update`
-`$ sudo apt install software-properties-common`
-`$ sudo add-apt-repository ppa:deadsnakes/ppa`
-`$ sudo apt update`
+
+```
+$ sudo apt update
+$ sudo apt install software-properties-common
+$ sudo add-apt-repository ppa:deadsnakes/ppa
+$ sudo apt update
+```
 
 2. Install main package
-`$ sudo apt install pythonXXX` where XXX version installed[^1]
+```
+$ sudo apt install pythonXXX
+``` 
+
+where XXX version installed[^1]
 
 3. Verify install completion
-`$ python --version`
+
+```$ python --version```
+
+### Install pygame (Windows)
+1. On any windows shell
+```
+python --version
+pip install pygame
+```
+2. Check the PyGame is working
+
+```
+import pygame
+```
+
+### Install pygame (Linux)
+1. On terminal, first make sure you are using latest version of python with `$ python3 –version`, then
+```
+$ sudo apt-get install python3-pygame
+```
+[^3]
+
+2. Check the PyGame is working with python
+
+```
+python 3
+pygame 1.9.6
+```
+
 
 
 
@@ -69,6 +104,8 @@ The implementation is based on 3 main axes:
 
 ## Acknowledgements
 - This project was created for the requirements of the lesson Autonomous Agents
-
+- The implementation was influenced by [Raspigame](https://books.google.gr/books?id=RovJDQAAQBAJ&pg=PA173&lpg=PA173&dq=raspigame.py&source=bl&ots=BeWHfIuIbB&sig=ACfU3U0RK-qHlvyaiSaM7DxoRs3lI3AL5w&hl=en&sa=X&ved=2ahUKEwjv8Ku66JP2AhViSvEDHbmcDooQ6AF6BAgCEAM#v=onepage&q=raspigame.py&f=false) for creating basic games.
 
 [^1]: Our version was Python3.8
+[^2]: PyGame is only supported python 3.7.7 or higher version
+[^3]: Verify you are using pip
