@@ -68,11 +68,15 @@ import pygame
 ```
 
 ### Install pygame (Linux)
-1. On terminal, first make sure you are using latest version of python with `$ python3 –version`, then
+1. On terminal, first make sure you are using latest version of python[^3] with 
+
+```$ python3 –version```, 
+
+then
 ```
 $ sudo apt-get install python3-pygame
 ```
-[^3]
+
 
 2. Check the PyGame is working with python
 
@@ -85,11 +89,17 @@ pygame 1.9.6
 
 
 ## How to run
+### Linux
 1. Open the terminal and go to the home directory
 `cd ~`
 2. Navigate the directory of the project
 3. Run `Solitaire.py`
 
+### PyCharm
+1. Insert folder in PyCharm workshop
+2. File->Settings->Project->Project Interpreter
+3. Tap + and search PyGame
+4. Install package
 
 
 ## Setup
