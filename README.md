@@ -17,13 +17,15 @@ The implementation is based on 3 main axes:
 
 
 ## Prerequisites 
-1. Install python environment. The instalation is easy either on Windows or Linux
+1. Install python[^1] environment. The instalation is easy either on Windows or Linux
 2. Install pygame modules
 3. Install Python IDE
     * This implementation is made in pyCharm
 
-### Install Python
-
+### Install Python (Windows)
+* https://www.python.org/downloads/
+* Link for the Windows installer python-XXX.msi file where XXX is the version you need to install. 
+ 
 
 ## Features
 * Graphical design of components
@@ -46,3 +48,5 @@ The implementation is based on 3 main axes:
 
 ## Acknowledgements
 - This project was created for the requirements of the lesson Autonomous Agents
+
+[^1]: Our version was Python3.8
