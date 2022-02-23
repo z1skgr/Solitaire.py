@@ -99,7 +99,8 @@ pygame 1.9.6
 1. Insert folder in PyCharm workshop
 2. File->Settings->Project->Project Interpreter
 3. Tap + and search PyGame
-4. Install package
+4. Install packages
+5. Run .py
 
 
 ## Setup
