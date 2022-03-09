@@ -4,6 +4,7 @@
 ## Table of contents
 * [General Info](#general-information)
 * [Features](#features)
+* [Prerequisites](#prerequisites)
 * [Setup](#setup)
 * [How to run](#how-to-run)
 * [Acknowledgements](#acknowledgements)
