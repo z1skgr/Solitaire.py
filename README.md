@@ -79,7 +79,7 @@ $ sudo apt-get install python3-pygame
 ```
 
 
-2. Check the PyGame is working with python
+2. Check PyGame is working with python
 
 ```
 python 3
@@ -91,7 +91,7 @@ pygame 1.9.6
 
 ## How to run
 ### Linux
-1. Open the terminal and go to the home directory
+1. Open the terminal and go to home directory
 `cd ~`
 2. Navigate the directory of the project
 3. Run `Solitaire.py`
