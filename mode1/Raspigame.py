@@ -42,13 +42,10 @@ class GameState(object):
     def update(self, gameTime):
         pass
 
-    def newupdate(self, gameTime, value):
+    def update_onPress(self, gameTime, value):
         pass
 
-    def newnewupdate(self, gameTime):
-        pass
-
-    def newnewnewupdate(self, gameTime):
+    def update_onRelease(self, gameTime):
         pass
 
     def indfun(self, gameTime):
@@ -147,10 +144,10 @@ class RaspberryPiGame(object):
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.currentState.newupdate(gameTime, value)
+                    self.currentState.update_onPress(gameTime, value)
 
                 if event.type == pygame.MOUSEBUTTONUP:
-                    self.currentState.newnewupdate(gameTime)
+                    self.currentState.update_onRelease(gameTime)
 
             gameTime = self.fpsClock.get_time()
 

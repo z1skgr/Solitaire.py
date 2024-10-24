@@ -1,3 +1,39 @@
+"""
+Solitaire Game Implementation
+
+This script implements a Solitaire card game using Pygame.
+
+Authors:
+    - Christos Ziskas (cziskas@gmail.com)
+
+Last Modified: 2024-10-24
+
+Version: 1.0
+
+License: MIT License
+
+Copyright (c) 2024 Christos Ziskas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+###Imports
 import random
 import pygame
 import pyautogui
@@ -11,6 +47,7 @@ from mode1.Cards import *
 from mode1.Raspigame import GameState
 from mode1.Bitmapfont import *
 
+# Defining color constants using RGB tuples
 black = (0, 0, 0)
 nblack = (128, 128, 128)
 white = (255, 255, 255)
@@ -30,14 +67,18 @@ output_string = "Time: {0:02}:{1:02}".format(minutes, seconds)
 count = 0
 end = False
 globalhid = 0
+movingFlag=False
 
 
-def autochange():
+
+
+# Function to alert the user when no moves are available
+def auto_change():
     global end
     pyautogui.alert('No Moves Available')
     end = True
 
-
+# Function to manage the game timer
 def timer():
     global frame_count, frame_rate, output_string, minutes, seconds, total_seconds
     total_seconds = frame_count // frame_rate
@@ -55,13 +96,13 @@ def timer():
     # Limit frames per second
     clock.tick(frame_rate)
 
+# Function to play background sound
+def sound():
+    mixer = pygame.mixer.Sound('cas music.wav')
+    pygame.mixer.Channel(0).play(mixer)
+    mixer.play(-1)
 
-def initmusic():
-    sound1 = pygame.mixer.Sound('cas music.wav')
-    pygame.mixer.Channel(0).play(sound1)
-    sound1.play(-1)
-
-
+# Class representing the game state during play
 class PlayGameState(GameState):
     sound: SoundType
 
@@ -84,14 +125,16 @@ class PlayGameState(GameState):
         self.font = BitmapFont('fasttracker2-style_12x12.png', 12, 12)
         self.initialise()
 
+    # Function to initialise cards and the game board
     def initialise(self):
         global globalhid
-        self.initialiseDeck()
-        self.initialiseTable()
+        self.initialise_deck()
+        self.initialise_table()
         globalhid = len(self.deck_list[0].hidden_cards)
-        initmusic()
+        sound()
 
-    def initialiseDeck(self):
+    # Cards initialisation and shuffling related to solitaire rules
+    def initialise_deck(self):
         self.m_card = MovedCard()
         for s in ["spades", "clubs", "diamonds", "hearts"]:
             for i in range(1, 14):
@@ -117,11 +160,11 @@ class PlayGameState(GameState):
                 im = pygame.image.load(self.start_path).convert()
                 self.deck_dict[self.final_path] = im
         self.card_list = self.shuffle_cards()
-
-    def initialiseTable(self):
+    #Table initialisation based on solitaire rules and deck layout
+    def initialise_table(self):
         self.deck_list.append(Card2(130, 30))
-        leng = len(self.deck_list)
-        for i in range(leng, self.pile1 + 1):
+        length = len(self.deck_list)
+        for i in range(length, self.pile1 + 1):
             self.deck_list.append(Card1(30 + 100 * (i - 1), 160, i))
         for i in range(1, self.pile2 + 1):
             self.deck_list.append(Card3(330 + 100 * (i - 1), 30))
@@ -132,8 +175,12 @@ class PlayGameState(GameState):
 
         self.deck_list[0].hidden_cards.extend(self.card_list)
 
+    """
+    Checks if all foundation piles are complete (have 13 cards each). 
+    If they are, it ends the game, presumably in a victory state. 
+    If any foundation pile is incomplete, the game continues.
+    """
     def update(self, gameTime):
-
         for item in self.deck_list:
             if isinstance(item, Card3):
                 if len(item.cards) != 13:
@@ -141,24 +188,33 @@ class PlayGameState(GameState):
         else:
             self.game.changeState(self.endState)
 
-    def newupdate(self, gameTime, value):
-        global globalhid
+    def update_onPress(self, gameTime, value):
+        global globalhid, movingFlag
         if len(self.deck_list[0].hidden_cards) == 0:
-            self.hints = self.availablehints(value)
+            self.hints = self.available_hints(value)
 
         if len(self.deck_list[0].cards_list) == 0:
             globalhid = len(self.deck_list[0].hidden_cards)
 
         # print("HInt", self.hints)
-
+        #print(self.deck_list)
         for item in self.deck_list:
             item.click_down(self.m_card, value)
+            #print(movingFlag)
 
-    def newnewupdate(self, gameTime):
+
+
+
+    def update_onRelease(self, gameTime):
+        global movingFlag
         self.m_card.click_up(self.deck_list)
+        #movingFlag=False
+        #movingFlag=False
+
 
     def draw(self, surface):
         global output_string, end
+        
         for item in self.deck_list:
             item.draw_card(surface, self.deck_dict)
 
@@ -169,11 +225,12 @@ class PlayGameState(GameState):
         self.font.draw(surface, output_string, 330, 10)
         self.button(surface, 255, 20, "Hint", 65, 40, red, bright_red, "Hint")
         # self.button(surface, 680, 500, "Pause", 100, 50, green, bright_green, "Pause")
-        if self.checkcomplete():
+        if self.check_complete():
             self.button(surface, 255, 70, "Solve", 65, 40, green, bright_green, "Solve")
 
         if end:
             self.button(surface, 255, 70, "Quit", 65, 40, black, nblack, "Quit")
+        
 
     def shuffle_cards(self):
         """This shuffle the cards"""
@@ -214,7 +271,7 @@ class PlayGameState(GameState):
                             pass
                         else:
                             if (not answ) and (not self.hints):
-                                autochange()
+                                auto_change()
 
                 if action == "Solve":
                     self.game.changeState(self.endState)
@@ -227,10 +284,11 @@ class PlayGameState(GameState):
 
         self.font.draw(surface, msg, x + 5, y + 5)
 
+
     def Hintfunction1(self, surface):
         answer = False
-        aceanswer = False
-        kinganswer = False
+        ace_hint = False
+        king_hint = False
 
         for item in (x for x in self.deck_list if isinstance(x, Card1)):
             # print(item.cards[-1])
@@ -243,7 +301,7 @@ class PlayGameState(GameState):
             # print("Moving", moving)
 
             if "ace" in moving:
-                aceanswer = True
+                ace_hint = True
                 for i in (x for x in self.deck_list if isinstance(x, Card3)):
                     # print(i.hidden_cards)
                     if len(i.cards) == 0:
@@ -254,7 +312,7 @@ class PlayGameState(GameState):
                 for i in (x for x in self.deck_list if isinstance(x, Card1) and len(x.cards) == 0):
                     pygame.draw.rect(surface, red, [i.rect.left, i.rect.top, 71, 97], 6)
                     k = t.rect.top
-                    kinganswer = True
+                    king_hint = True
                     for zz in t.cards:
                         pygame.draw.rect(surface, red, [t.rect.left, k, 71, 97], 6)
                         k -= 16
@@ -282,7 +340,7 @@ class PlayGameState(GameState):
                         # print(item3.hidden_cards)
                         k = item3
                         if len(item3.cards) != 0:
-                            answer = item3.checkvalidpile(moving, item3.cards[-1])
+                            answer = item3.check_validpile(moving, item3.cards[-1])
                             if answer:
                                 i = k.rect.top
                                 pygame.draw.rect(surface, red, [k.rect.left, i, 71, 97], 6)
@@ -290,10 +348,12 @@ class PlayGameState(GameState):
                                 pygame.draw.rect(surface, red, [item.rect.left, i, 71, 97], 6)
                                 break
 
-            if aceanswer or answer or kinganswer:
+            if ace_hint or answer or king_hint:
                 return True
         else:
             return False
+
+   
 
     def Hintfunction2(self, surface):
         t = self.deck_list[0]
@@ -346,7 +406,7 @@ class PlayGameState(GameState):
                         # print(item3.cards)
                         pp = item3
                         if len(item3.cards) != 0:
-                            answer = item3.checkvalidpile(mm.cards[-1], item3.cards[-1])
+                            answer = item3.check_validpile(mm.cards[-1], item3.cards[-1])
                             if answer:
                                 oo = pp.rect.top
                                 pygame.draw.rect(surface, red, [pp.rect.left, oo, 71, 97], 6)
@@ -362,7 +422,7 @@ class PlayGameState(GameState):
             pygame.draw.rect(surface, red, [30, 30, 71, 97], 6)
             return False
 
-    def checkcomplete(self):
+    def check_complete(self):
         for item1 in (xx for xx in self.deck_list if isinstance(xx, Card1) and len(xx.cards) != 0):
             if len(item1.hidden) > 0 or (len(self.deck_list[0].hidden_cards) != 0 or len(
                     self.deck_list[0].cards_list) != 0):
@@ -370,11 +430,11 @@ class PlayGameState(GameState):
         else:
             return True
 
-    def availablehints(self, value):
+    def available_hints(self, value):
         t = self.deck_list[0]
         answer = False
-        aceanswer = False
-        kinganswer = False
+        ace_hint = False
+        king_hint = False
         k = t.cards_list
         # print(k)
         kinn = 0
@@ -400,7 +460,7 @@ class PlayGameState(GameState):
                 for ll in (x for x in self.deck_list if isinstance(x, Card3)):
                     # print("Found spot ace")
                     if not ll.cards:
-                        aceanswer = True
+                        ace_hint = True
                         break
             elif "king" in i:
                 # print("King here")
@@ -408,10 +468,10 @@ class PlayGameState(GameState):
                     if not uu.cards:
                         # print("Found spot king")
                         kinn = 1
-                        kinganswer = True
+                        king_hint = True
                         break
                 if kinn == 0:
-                    kinganswer = False
+                    king_hint = False
             else:
 
                 for item2 in (xx for xx in self.deck_list if isinstance(xx, Card1)):
@@ -428,14 +488,14 @@ class PlayGameState(GameState):
                         # print("Item3", item3.cards[-1])
                         # print("I in ", i)
                         if item3.cards:
-                            answer = item3.checkvalidpile(i, item3.cards[-1])
+                            answer = item3.check_validpile(i, item3.cards[-1])
                             # print("Answer3", answer)
                             if answer:
                                 break
                         else:
                             answer = False
 
-            if aceanswer or answer or kinganswer:
+            if ace_hint or answer or king_hint:
                 return True
             yy = yy + numb
             # print("Yy", yy)

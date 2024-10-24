@@ -89,8 +89,10 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+.virtualenv
 env/
 venv/
+virtualenv/
 ENV/
 env.bak/
 venv.bak/
@@ -112,3 +114,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#idea
+.idea/
+/idea

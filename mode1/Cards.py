@@ -51,6 +51,7 @@ class MovedCard(object):
 
                         if isinstance(self.cards, Card1):
                             self.cards.show_card()
+
                         self.cards = None
                         break
             else:
@@ -134,8 +135,8 @@ class Card1(Card):
 
     def click_down(self, card, value):
         """This is used when the user press the mouse button"""
-
         if len(self.cards) > 0:
+
             top = self.rect.top
             lst = []
 
@@ -233,54 +234,54 @@ class Card1(Card):
         return result
 
     def checkvalid(self, mcard, mmcard):
-        value1 = mcard.find('_')
-        value2 = mmcard.find('_')
-        valuecard1 = ""
-        valuecard2 = ""
-        suitcard1 = ""
-        suitcard2 = ""
+        v1 = mcard.find('_')
+        v2 = mmcard.find('_')
+        v_card1 = ""
+        v_card2 = ""
+        s_card1 = ""
+        s_card2 = ""
         for i in range(len(mcard)):
             if mcard[i] == '_':
                 continue
-            if i < value1:
-                valuecard1 += mcard[i]
+            if i < v1:
+                v_card1 += mcard[i]
             else:
-                suitcard1 += mcard[i]
+                s_card1 += mcard[i]
         for i in range(0, len(mmcard)):
             if mmcard[i] == '_':
                 continue
-            if i < value2:
-                valuecard2 += mmcard[i]
+            if i < v2:
+                v_card2 += mmcard[i]
             else:
-                suitcard2 += mmcard[i]
+                s_card2 += mmcard[i]
         # print(valuecard1, suitcard1)
         # print(valuecard2, suitcard2)
-        if "jack" in valuecard1:
-            ncard1 = 11
-        elif "queen" in valuecard1:
-            ncard1 = 12
-        elif "king" in valuecard1:
-            ncard1 = 13
-        elif "ace" in valuecard1:
-            ncard1 = 1
+        if "jack" in v_card1:
+            n_card1 = 11
+        elif "queen" in v_card1:
+            n_card1 = 12
+        elif "king" in v_card1:
+            n_card1 = 13
+        elif "ace" in v_card1:
+            n_card1 = 1
         else:
-            ncard1 = int(valuecard1)
+            n_card1 = int(v_card1)
 
-        if "jack" in valuecard2:
-            ncard2 = 11
-        elif "queen" in valuecard2:
-            ncard2 = 12
-        elif "king" in valuecard2:
-            ncard2 = 13
-        elif "ace" in valuecard2:
-            ncard2 = 1
+        if "jack" in v_card2:
+            n_card2 = 11
+        elif "queen" in v_card2:
+            n_card2 = 12
+        elif "king" in v_card2:
+            n_card2 = 13
+        elif "ace" in v_card2:
+            n_card2 = 1
         else:
-            ncard2 = int(valuecard2)
+            n_card2 = int(v_card2)
 
         # print(ncard1, ncard2)
-        if "hearts" in suitcard1 or "diamonds" in suitcard1:
-            if "spades" in suitcard2 or "clubs" in suitcard2:
-                if ncard2 == ncard1 + 1:
+        if "hearts" in s_card1 or "diamonds" in s_card1:
+            if "spades" in s_card2 or "clubs" in s_card2:
+                if n_card2 == n_card1 + 1:
                     # print(ncard1, ncard2, "True")
                     return True
                 else:
@@ -290,8 +291,8 @@ class Card1(Card):
                 # print(ncard1, ncard2, "Same color suits")
                 return False
         else:
-            if "hearts" in suitcard2 or "diamonds" in suitcard2:
-                if ncard2 == ncard1 + 1:
+            if "hearts" in s_card2 or "diamonds" in s_card2:
+                if n_card2 == n_card1 + 1:
                     # print(ncard1, ncard2, "True")
                     return True
                 else:
@@ -449,54 +450,54 @@ class Card3(Card):
     def add_card(self, card):
         self.cards.extend(card)
 
-    def checkvalidpile(self, mcard, mmcard):
-        value1 = mcard.find('_')
-        value2 = mmcard.find('_')
-        valuecard1 = ""
-        valuecard2 = ""
-        suitcard1 = ""
-        suitcard2 = ""
+    def check_validpile(self, mcard, mmcard):
+        val_1 = mcard.find('_')
+        val_2 = mmcard.find('_')
+        v_card1 = ""
+        v_card2 = ""
+        s_card1 = ""
+        s_card2 = ""
 
         for i in range(len(mcard)):
             if mcard[i] == '_':
                 continue
-            if i < value1:
-                valuecard1 += mcard[i]
+            if i < val_1:
+                v_card1 += mcard[i]
             else:
-                suitcard1 += mcard[i]
+                s_card1 += mcard[i]
         for i in range(0, len(mmcard)):
             if mmcard[i] == '_':
                 continue
-            if i < value2:
-                valuecard2 += mmcard[i]
+            if i < val_2:
+                v_card2 += mmcard[i]
             else:
-                suitcard2 += mmcard[i]
+                s_card2 += mmcard[i]
 
-        if "jack" in valuecard1:
-            ncard1 = 11
-        elif "queen" in valuecard1:
-            ncard1 = 12
-        elif "king" in valuecard1:
-            ncard1 = 13
-        elif "ace" in valuecard1:
-            ncard1 = 1
+        if "jack" in v_card1:
+            n_card1 = 11
+        elif "queen" in v_card1:
+            n_card1 = 12
+        elif "king" in v_card1:
+            n_card1 = 13
+        elif "ace" in v_card1:
+            n_card1 = 1
         else:
-            ncard1 = int(valuecard1)
+            n_card1 = int(v_card1)
 
-        if "jack" in valuecard2:
-            ncard2 = 11
-        elif "queen" in valuecard2:
-            ncard2 = 12
-        elif "king" in valuecard2:
-            ncard2 = 13
-        elif "ace" in valuecard2:
-            ncard2 = 1
+        if "jack" in v_card2:
+            n_card2 = 11
+        elif "queen" in v_card2:
+            n_card2 = 12
+        elif "king" in v_card2:
+            n_card2 = 13
+        elif "ace" in v_card2:
+            n_card2 = 1
         else:
-            ncard2 = int(valuecard2)
+            n_card2 = int(v_card2)
 
         # print(ncard1, ncard2)
-        if suitcard1 == suitcard2:
-            if ncard1 == ncard2 + 1:
+        if s_card1 == s_card2:
+            if n_card1 == n_card2 + 1:
                 # print(ncard1, ncard2, "True")
                 return True
             else:

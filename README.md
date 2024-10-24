@@ -94,14 +94,32 @@ pygame 1.9.6
 1. Open the terminal and go to home directory
 `cd ~`
 2. Navigate the directory of the project
-3. Run `Solitaire.py`
+3. Environment `pygame-1.9.6`
+4. Run `Solitaire.py`
 
 ### PyCharm
 1. Insert folder in PyCharm workshop
 2. File->Settings->Project->Project Interpreter
 3. Tap + and search PyGame
 4. Install packages
+    * pip install python
+    * pip install pygame
+    * pip install pyautogui
+    * pip install pil (or pillow)
 5. Run .py
+
+### venv
+1. Create virtual environment 
+`python -m venv /Solitaire.py/venv`
+2. Activate
+`\Solitaire.py\venv\Scripts\activate`
+3. Install packages
+    * pip install python
+    * pip install pygame
+    * pip install pyautogui
+    * pip install pil (or pillow)
+4. pip install -r requirements.txt
+
 
 
 ## Setup
