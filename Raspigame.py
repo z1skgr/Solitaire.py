@@ -1,6 +1,5 @@
 import pygame
 import sys
-from pygame.locals import *
 
 """----------------------------------------------------------------------------------------------------
 GameState
@@ -24,14 +23,14 @@ class GameState(object):
     Called by the game when entering the state for the first time.
     """
 
-    def onEnter(self, previousState):
+    def onEnter(self, previousState): # Placeholder for actions to perform when entering this state
         pass
 
     """
     Called by the game when leaving the state.
     """
 
-    def onExit(self):
+    def onExit(self): # Placeholder for actions to perform when exiting this state
         pass
 
     """
@@ -39,19 +38,19 @@ class GameState(object):
     the last call is passed.
     """
 
-    def update(self, gameTime):
+    def update(self, gameTime): # Placeholder for updating the state based on game time
         pass
 
-    def update_onPress(self, gameTime, value):
+    def update_onPress(self, gameTime, value): # Placeholder for handling mouse button press events
         pass
 
-    def update_onRelease(self, gameTime):
+    def update_onRelease(self, gameTime): # Placeholder for handling mouse button release events
         pass
 
-    def indfun(self, gameTime):
+    def getIndex(self, gameTime): # Placeholder for retrieving the index of the current state
         pass
 
-    def button(self):
+    def button(self): # Placeholder for button-related functionality
         pass
 
     """
@@ -84,13 +83,13 @@ class RaspberryPiGame(object):
         pygame.init()
         pygame.display.set_caption(gameName)
 
-        self.fpsClock = pygame.time.Clock()
-        self.mainwindow = pygame.display.set_mode((width, height))
-        self.background = pygame.Color(255, 255, 255)
+        self.fpsClock = pygame.time.Clock() # Create a clock to manage the frame rate
+        self.main_window = pygame.display.set_mode((width, height)) # Set the dimensions of the game window
+        self.background = pygame.Color(255, 255, 255) # Set the initial background color to white
         self.currentState = None
-        self.gameover = False
-        self.done = False
-        self.restart = False
+        self.game_over = False # Flag to indicate if the game is over
+        self.done = False # Flag to indicate if the game loop should continue
+
 
     """
     Change the current state. If the newState is 'None' then the game will terminate.
@@ -104,9 +103,9 @@ class RaspberryPiGame(object):
             pygame.quit()
             sys.exit()
 
-        oldState = self.currentState
+        old_state = self.currentState
         self.currentState = newState
-        newState.onEnter(oldState)
+        newState.onEnter(old_state)
 
     """
     Run the game. Initial state must be supplied.
@@ -119,28 +118,16 @@ class RaspberryPiGame(object):
 
 
         while not self.done:
-            #print(gameTime)
-            # Edw ginete gnwsto to mode pou dialexame
-            # if not isinstance(self.currentState, InterstitialState) and not isinstance(self.currentState,
-            #                                                                          PlayGameState):
-            #  value = self.currentState.index
 
-            # if isinstance(self.currentState, PlayGameState):
-            #   print(isinstance(self.currentState, PlayGameState))
-
-            if self.currentState.indfun(gameTime) is not None:
-                value = self.currentState.indfun(gameTime)
+            if self.currentState.getIndex(gameTime) is not None:
+                value = self.currentState.getIndex(gameTime)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or (
-                        event.type == pygame.KEYDOWN and event.key == pygame.K_q):  # If user
-                    self.done = True  # clicked close:
-                    pygame.quit()
-                    sys.exit()
-
-                    # new lines to make it set restart to true if r is pressed
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                        event.type == pygame.KEYDOWN and event.key == pygame.K_q):  # # If user presses 'q' or closes the window, quit the game:
                     self.done = True
+                    pygame.quit() # Quit pygame
+                    sys.exit()
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -149,27 +136,20 @@ class RaspberryPiGame(object):
                 if event.type == pygame.MOUSEBUTTONUP:
                     self.currentState.update_onRelease(gameTime)
 
-            gameTime = self.fpsClock.get_time()
+            gameTime = self.fpsClock.get_time() # Update game time
 
-            if self.currentState is not None:
+            if self.currentState is not None: # Update the current state
                 self.currentState.update(gameTime)
 
 
-            self.mainwindow.fill(self.background)
-            bimage = pygame.image.load('background.png')
-            self.mainwindow.blit(bimage, (0,0))
+            self.main_window.fill(self.background)
+            bimage = pygame.image.load('background.png') # Load the background image
+            self.main_window.blit(bimage, (0, 0)) # Draw the background image on the window
             if self.currentState is not None:
-                self.currentState.draw(self.mainwindow)
+                self.currentState.draw(self.main_window) # Draw the current state on the window
 
-            pygame.display.flip()
-            self.fpsClock.tick(20)
+            pygame.display.flip() # Update the display
+            self.fpsClock.tick(20) # Control the frame rate to 20 FPS
 
-        pygame.quit()
-        # print(self.restart)
+        pygame.quit() # Quit pygame when the loop ends
 
-# def restartf(self):
-#    if __name__ == '__main__':
-#       pass
-#  else:
-#     while self.run(self.currentState):
-#        self.currentState.m_card = []

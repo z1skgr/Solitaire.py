@@ -2,10 +2,10 @@
 
 import math
 
-from mode1.Interstitial import *
-from mode1.MainMenu import MainMenuState
-from mode1.Raspigame import RaspberryPiGame
-from mode1.SolitaireGame import PlayGameState
+from Interstitial import *
+from MainMenu import MainMenuState
+from Raspigame import RaspberryPiGame
+from SolitaireGame import PlayGameState
 
 """----------------------------------------------------------------------------------------------------
 Application Entry Point Main entry point to the application. Sets up the objects and starts the main loop.

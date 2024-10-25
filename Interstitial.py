@@ -6,9 +6,10 @@ Displays a message between screens. Can be used for ''Game over'' or ''Get ready
 messages
 ----------------------------------------------------------------------------------------------------
 """
-from mode1 import Cards, SolitaireGame
-from mode1.Bitmapfont import BitmapFont
-from mode1.Raspigame import GameState
+import Cards
+import SolitaireGame
+from Bitmapfont import BitmapFont
+from Raspigame import GameState
 
 
 class InterstitialState(GameState):
@@ -17,13 +18,13 @@ class InterstitialState(GameState):
         super(InterstitialState, self).__init__(game)
         self.nextState = nextState
         self.font = BitmapFont('fasttracker2-style_12x12.png', 12, 12)
-        self.message = msg
-        self.waitTimer = waitTimeMs
+        self.message = msg # Storing the message to be displayed
+        self.waitTimer = waitTimeMs # Setting the timer for how long to wait before transitioning
 
     def update(self, gameTime):
         self.waitTimer -= gameTime
         if self.waitTimer < 0:
-            self.game.changeState(self.nextState)
+            self.game.changeState(self.nextState) # Changing to the next game state
 
     def draw(self, surface):
         self.font.centre(surface, self.message, surface.get_rect().height / 2)
