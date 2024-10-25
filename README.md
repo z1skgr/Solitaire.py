@@ -124,7 +124,9 @@ pygame 1.9.6
     * Additional Files
 7. After py2exe is done, make standalone structure. Move files to make structure like this
 
-├── internal             
+
+
+├── internal     
 │   ├── venv/           
 │   ├── image/            
 │   ├── Cards.py        
@@ -133,14 +135,19 @@ pygame 1.9.6
 │   ├── Raspigame.py            
 │   ├── Solitaire.py           
 │   ├── Interstitial.py          
-│   └── SolitaireGame.py        
-├── playing cards
-├── background.png
-├── background.png
-├── backsmall.png
-├── cas musc.wav.png
-├── fasttracker2-style_12x12.png
-└── Solitaire.exe
+│   └── SolitaireGame.py  
+└── playing_cards (etc.)
+
+...
+
+
+etc. -> Structure continues with
+* fasttracker2-style_12x12png
+* cas music.wav
+* background.png
+* back.png
+
+
 
 
 ## Setup
