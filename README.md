@@ -147,13 +147,20 @@ etc. -> Structure continues with
 * background.png
 * back.png
 
-
+8. Play 
+`python Solitaire.py`
 
 
 ## Setup
 ![12](https://user-images.githubusercontent.com/22920222/154859827-37af8072-1a45-45c3-bf6e-2b8c772f7e6a.png)
 
-
+##  Potential mods
+1. Animation
+2. Web App (using flask etc.)
+3. Finding hints as stack 
+    * press button 1st time show 1st hint 
+    * press button 2nd time show next hint etc.
+4. and more
 
 
 
@@ -161,7 +168,7 @@ etc. -> Structure continues with
 
 
 ## Acknowledgements
-- This project was created for the requirements of the lesson Autonomous Agents
+- This project was created for the requirements of the lesson **Autonomous Agents**
 - The implementation was influenced by [Raspigame](https://books.google.gr/books?id=RovJDQAAQBAJ&pg=PA173&lpg=PA173&dq=raspigame.py&source=bl&ots=BeWHfIuIbB&sig=ACfU3U0RK-qHlvyaiSaM7DxoRs3lI3AL5w&hl=en&sa=X&ved=2ahUKEwjv8Ku66JP2AhViSvEDHbmcDooQ6AF6BAgCEAM#v=onepage&q=raspigame.py&f=false) for creating basic games.
 
 [^1]: Our version was Python3.8
